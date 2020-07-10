@@ -16,11 +16,11 @@
 */
 
 const viewPath = 'cars';
-const Car = require('../models/resource');
+const Car = require('../models/car');
 const User = require('../models/User');
-
 exports.index = async (req, res) => {
   try {
+    console.log(req.session.passport);
     const { user: email } = req.session.passport;
     const user = await User.findOne({email: email});
     const cars = await Car
@@ -36,27 +36,24 @@ exports.index = async (req, res) => {
     res.redirect('/');
   }
 };
-
 exports.show = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id)
-      .populate('user');
+    .populate('user');
     res.render(`${viewPath}/show`, {
       pageTitle: car.title,
       car: car
     });
   } catch (error) {
-    req.flash('danger', `There was an error displaying this car information: ${error}`);
+    req.flash('danger', `There was an error displaying this car informatio: ${error}`);
     res.redirect('/');
   }
 };
-
 exports.new = (req, res) => {
   res.render(`${viewPath}/new`, {
-    pageTitle: 'Add new car Info'
+    pageTitle: 'Add new car'
   });
 };
-
 exports.create = async (req, res) => {
   try {
     const { user: email } = req.session.passport;
@@ -65,13 +62,11 @@ exports.create = async (req, res) => {
     req.flash('success', 'Car information added successfully');
     res.redirect(`/cars/${car.id}`);
   } catch (error) {
-    req.flash('danger', `There was an error adding this car information: ${error}`);
+    req.flash('danger', `There was an error adding this car information:  ${error}`);
     req.session.formData = req.body;
     res.redirect('/cars/new');
   }
 };
-
-
 exports.edit = async (req, res) => {
   try {
     const car = await Car.findById(req.params.id);
@@ -81,22 +76,18 @@ exports.edit = async (req, res) => {
     });
   } catch (error) {
     req.flash('danger', `There was an error accessing this car information: ${error}`);
-    res.redirect('/');
+    res.redirect(`/`);
   }
 };
-
 exports.update = async (req, res) => {
   try {
     const { user: email } = req.session.passport;
     const user = await User.findOne({email: email});
-
     let car = await Car.findById(req.body.id);
     if (!car) throw new Error('The car information could not be found');
-
     const attributes = {user: user._id, ...req.body};
     await Car.validate(attributes);
     await Car.findByIdAndUpdate(attributes.id, attributes);
-
     req.flash('success', 'The car information was updated successfully');
     res.redirect(`/cars/${req.body.id}`);
   } catch (error) {
@@ -104,7 +95,6 @@ exports.update = async (req, res) => {
     res.redirect(`/cars/${req.body.id}/edit`);
   }
 };
-
 exports.delete = async (req, res) => {
   try {
     await Car.deleteOne({_id: req.body.id});
