@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
   width: 100%;
+  background-image: linear-gradient(to right, #ddd4b7, #c5e28f, #e1e972, #f0c0ca);
 }
 
 header:not(.home-cta), .alert {
@@ -33,3 +34,20 @@ header:not(.home-cta), .alert {
   text-align: center;
   z-index: 1;
 }
+
+.form-inline .delete {
+  border: none;
+  background: none;
+  color: #007bff;
+  margin:0;
+  padding:0;
+}
+
+.form-inline > .delete:hover {
+  color: #0056B3;
+}
+
+.jumbotron{
+  text-align: center;
+}
+

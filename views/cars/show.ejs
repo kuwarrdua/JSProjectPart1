@@ -7,14 +7,10 @@
 <div class="container my-5">
   <header>
     <h1>
-      <%= car.model %>
+      <%= car.carMake %> <%= car.model %>
       <a href="/cars/<%= car.id %>/edit">
         <i class="fa fa-edit"></i>
         Change the car info
-      </a>
-      <a href="/cars/delete">
-        <i class="fa fa-trash"></i>
-        Delete the car
       </a>
     </h1>
     <br>
@@ -22,7 +18,18 @@
   </header>
   <hr>
   <div class="content">
-    This is the car information you have submitted <%- car.carMake %>, <%- car.model %>, <%- car.year %>, <%- car.warranty %> 
+    This is the car information you have submitted  <strong><%- car.carMake %>, <%- car.model %>, <%- car.year %>, <%- car.warranty %> </strong>
+    <form class="form-inline" action="/cars/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this car information? We are still reviewing it..!?');">
+      <input type="hidden" value="<%= car.id %>" name="id">
+      <button class="delete" type="submit">
+        <i class="fa fa-trash"></i>
+        Delete car Info
+      </button>
+    </form>
+    <div class="container">
+      <p  style="color:crimson"> We are reviewing this car information. Please check again after 3 days. We hope you have an awesome day.<br>
+        Regards-: Kazy's Car World
+      </p>
   </div>
 </div>
 

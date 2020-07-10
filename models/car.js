@@ -15,9 +15,9 @@
 const mongoose = require('mongoose');
 
 const CarInventorySchema = new mongoose.Schema({
-  User: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: 'User',
     required: true
   },
   carMake: {

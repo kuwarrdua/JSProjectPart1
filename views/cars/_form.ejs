@@ -3,7 +3,7 @@
 -->
 
 <form action="<%= (typeof actionPath === 'undefined') ? '/cars' : actionPath %>" , method="post">
-  <% if (typeof actionPath !== 'undefined') { %>}
+  <% if (typeof actionPath !== 'undefined') { %>
   <input type="hidden" name="id" value="<%= formData.id %>">
   <% } %>
   <div class="form-group">
